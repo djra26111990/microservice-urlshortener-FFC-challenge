@@ -38,6 +38,15 @@ app.get("/api/shorturl/:short_url", async (req, res) => {
 
 });
 
+app.get("/api/shorturl", (req, res) => {
+  const urlExample = {
+    original_url: "https://danielrivasdev.co",
+    short_url: urlArr + 1
+  }
+  urlArr.push(urlExample)
+  res.status(200).json(urlExample)
+})
+
 app.post("/api/shorturl", async (req, res) => {
   const { url } = req.body;
   let id = urlArr.length + 1
