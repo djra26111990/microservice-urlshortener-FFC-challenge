@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/djra26111990/request-header-parser-microservice-challenge-FFC"
+    "url": "https://github.com/djra26111990/microservice-urlshortener-FFC-challenge"
   },
   "author": "Daniel Rivas",
   "scripts": {
