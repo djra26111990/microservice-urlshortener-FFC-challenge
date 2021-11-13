@@ -1,0 +1,26 @@
+{
+  "name": "microservice-urlshortener-FFC-challenge",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "url",
+    "shortener",
+    "dns",
+    "microservice"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djra26111990/request-header-parser-microservice-challenge-FFC"
+  },
+  "author": "Daniel Rivas",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nanoid": "^3.1.30"
+  }
+}
