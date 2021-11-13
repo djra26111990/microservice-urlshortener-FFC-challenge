@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dns from "dns";
-import { nanoid } from "nanoid";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
