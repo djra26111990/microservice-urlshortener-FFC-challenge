@@ -41,9 +41,9 @@ app.get("/api/shorturl/:short_url", async (req, res) => {
 app.get("/api/shorturl", (req, res) => {
   const urlExample = {
     original_url: "https://danielrivasdev.co",
-    short_url: urlArr.length + 1
+    short_url: 1
   }
-  urlArr.push(urlExample)
+  urlArr.push(url)
   res.status(200).json(urlExample)
 })
 
