@@ -6,7 +6,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = "0.0.0.0";
 
-const urlArr = [];
+const urlArr = [
+  {
+    original_url: "https://danielrivasdev.co",
+    short_url: 1,
+  },
+];
 
 app.use(cors());
 app.use(cors({ optionsSuccessStatus: 200 }));
@@ -22,46 +27,49 @@ app.get("/", (req, res) => {
 
 app.get("/api/shorturl/:short_url", async (req, res) => {
   const short_url = parseInt(req.params.short_url);
-  console.log("short_id: ", short_url)
 
   const urlFiltered = urlArr.filter((url) => {
-    console.log("URL PARAM. SHORTURL", url.short_url)
-    return url.short_url === short_url
+    return url.short_url === short_url;
   });
-  console.log(urlFiltered);
-  
-  if(urlFiltered.length && Array.isArray(urlFiltered)) {
-      res.redirect(urlFiltered[0].original_url);
-  } else {
-      res.redirect("/");
-  }
 
+  if (urlFiltered.length && Array.isArray(urlFiltered)) {
+    res.redirect(urlFiltered[0].original_url);
+  } else {
+    res.redirect("/");
+  }
 });
 
 app.get("/api/shorturl", (req, res) => {
-  const urlExample = {
-    original_url: "https://danielrivasdev.co",
-    short_url: 1
-  }
-  urlArr.push(url)
-  res.status(200).json(urlExample)
-})
+  console.log("ARR EXAMPLE", urlArr);
+  res.send(urlArr[0]);
+});
 
 app.post("/api/shorturl", async (req, res) => {
   const { url } = req.body;
-  let id = urlArr.length + 1
-  console.log("LENGTH Arr", id)
-
+  let id = urlArr.length + 1;
+  let original_url = url;
   const validUrl = url.includes("http://") || url.includes("https://");
+
+  const searchUrlIfExist = urlArr.filter((url) => {
+    return url.original_url == original_url;
+  });
+
+  console.log("SEARCH URL IF EXIST", searchUrlIfExist[0]?.original_url);
+  console.log("URL RECEIVED", original_url)
 
   if (!validUrl) {
     res.json({
       error: "Invalid URL",
     });
+  } else if (url === searchUrlIfExist[0]?.original_url) {
+  console.log("ARR WITHOUT CHANGES", urlArr);
+
+    res.json({
+      original_url: url,
+      short_url: searchUrlIfExist[0].short_url,
+    });
   } else {
     const urlString = url.substring(url.lastIndexOf("/") + 1);
-
-    console.log("URLs: ", url, urlString);
 
     dns.lookup(urlString, (err, address, family) => {
       if (err) {
@@ -70,10 +78,10 @@ app.post("/api/shorturl", async (req, res) => {
         });
       } else {
         urlArr.push({
-            original_url: url,
-            short_url: id,
+          original_url: url,
+          short_url: id,
         });
-        console.log('URL ARRAY', urlArr);
+        console.log("ARR PUSHED", urlArr);
 
         res.json({
           original_url: url,
